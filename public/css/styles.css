@@ -4,3 +4,15 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --primary-color: #FFC0CB; 
+  --secondary-color: #333333;
+  --background-color: #ffffff;
+  --font-color: #333333;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--font-color);
+  background-color: var(--background-color);
+}
