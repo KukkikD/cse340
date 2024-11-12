@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 
 :root {
   --primary-color: #871e53; 
