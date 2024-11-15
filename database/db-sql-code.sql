@@ -2,7 +2,7 @@
 
 -- DROP TYPE IF EXISTS public.account_type;
 CREATE TYPE public.account_type AS ENUM
-    ('Client ', 'Employee', 'Admin'); -- I put accident 1 space back of 'Client '
+    ('Client', 'Employee', 'Admin'); -- I put accident 1 space back of 'Client '
 
 ALTER TYPE public.account_type
     OWNER TO cse340;
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS public.account
     account_lastname character varying NOT NULL,
     account_email character varying NOT NULL,
     account_password character varying NOT NULL,
-    account_type account_type NOT NULL DEFAULT 'Client '::account_type, -- I put accident 1 space back of 'Client '
+    account_type account_type NOT NULL DEFAULT 'Client'::account_type, -- I put accident 1 space back of 'Client '
     CONSTRAINT account_pkey PRIMARY KEY (account_id)
 );
 
@@ -238,3 +238,20 @@ VALUES   (
     'White',
     5
   );
+
+--Modify the 'GM Hummer' Record
+UPDATE inventory 
+SET inv_description = REPLACE(inv_description, 'small interiors', 'a huge interior') 
+WHERE inv_make = 'GM' AND inv_model = 'Hummer';
+
+--Use an Inner Join to Select the make and model fields from the inventory table 
+--and the classification name field from the classification table.
+SELECT inv_make, inv_model, classification.classification_name
+FROM inventory
+INNER JOIN classification ON inventory.classification_id = classification.classification_id
+WHERE classification.classification_name = 'Sport';
+
+--Update File Paths in the Inventory Table
+UPDATE inventory 
+SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
+    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
