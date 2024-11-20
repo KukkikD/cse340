@@ -2,7 +2,7 @@
 
 -- DROP TYPE IF EXISTS public.account_type;
 CREATE TYPE public.account_type AS ENUM
-    ('Client', 'Employee', 'Admin'); -- I put accident 1 space back of 'Client '
+    ('Client', 'Employee', 'Admin'); 
 
 ALTER TYPE public.account_type
     OWNER TO cse340;
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS public.account
     account_lastname character varying NOT NULL,
     account_email character varying NOT NULL,
     account_password character varying NOT NULL,
-    account_type account_type NOT NULL DEFAULT 'Client'::account_type, -- I put accident 1 space back of 'Client '
+    account_type account_type NOT NULL DEFAULT 'Client'::account_type, 
     CONSTRAINT account_pkey PRIMARY KEY (account_id)
 );
 

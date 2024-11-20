@@ -301,7 +301,7 @@ picture img {
   font-weight: bold;
 }
 
-#inv_h1 {
+.title_h1 {
   margin-top: 20px;
 }
 
@@ -311,6 +311,12 @@ picture img {
   font-size: 18px;
   color: #888;
   margin: 20px 0;
+}
+
+/*Error page */
+.error-msg {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 
