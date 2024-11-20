@@ -233,6 +233,86 @@ picture img {
   font-size: small;
 }
 
+/* Vehicle Grid Styling */
+#inv-display {
+  display: flex; 
+  flex-wrap: wrap;
+  gap: 20px; 
+  padding: 20px;
+  list-style: none; 
+  justify-content: center; 
+}
+
+#inv-display hr {
+  border: 0;
+  border-top: 4px solid var(--primary-color); 
+  margin: 15px 0;
+}
+
+#inv-display li {
+  flex: 1 1 calc(33.33% - 20px); 
+  max-width: calc(33.33% - 20px); 
+  box-sizing: border-box; 
+  text-align: center; 
+  background: #fff;
+  border: 1px solid var(--primary-color);
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#inv-display li:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#inv-display img {
+  width: 100%; 
+  max-height: 120px; 
+  object-fit: cover; 
+  border-radius: 5px; 
+}
+
+#inv-display .namePrice {
+  margin-top: 10px; 
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+#inv-display .namePrice h2 {
+  font-size: 16px; 
+  font-weight: bold;
+  margin: 5px 0;
+  color: var(--primary-color); 
+  text-decoration: none; 
+  transition: color 0.3s ease;
+  padding-top: 10px;
+}
+
+#inv-display .namePrice h2 a:hover {
+  color: #3a031f;
+  text-decoration: none;
+}
+
+#inv-display .namePrice span {
+  font-size: 16px;
+  color: #444;
+  font-weight: bold;
+}
+
+#inv_h1 {
+  margin-top: 20px;
+}
+
+/* Notices Styling */
+.notice {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  margin: 20px 0;
+}
+
 
 /* Media Query for smaller screen*/
 @media (max-width: 640px) {
