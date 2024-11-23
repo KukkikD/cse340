@@ -65,6 +65,29 @@ Util.buildClassificationGrid = async function(data){
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
+/* ****************************************
+ * Build the vehicle details view HTML
+ **************************************** */
+Util.buildVehicleDetails = function(vehicle) {
+  let details = `
+    <div class="vehicle-details">
+      <section class ="vehicleImg">
+        <img id="vehicle-img" src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
+      </section>
+      <section class ="vehicle-info">
+      <h2>${vehicle.inv_make} ${vehicle.inv_model} Details:</h2>
+        <p class="price"><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</p>
+        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+        <p class="colors"><strong>Color:</strong> ${vehicle.inv_color}</p>
+        <p><strong>Mileage:</strong> ${new Intl.NumberFormat('en-US').format(vehicle.inv_miles)} miles</p>
+      </section>
+    </div>
+  `
+  return details
+}
+
 
 
 module.exports = Util
+
+//line 82: the mileage is formatted correctly with commas for thousands separators

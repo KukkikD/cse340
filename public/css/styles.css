@@ -122,6 +122,11 @@ picture img {
   margin-top: 10px;
   border-radius: 8px;
   display: inline-block;
+  text-align: center;
+}
+
+.cta-button:hover {
+  background-color: #8b4d6c;
 }
 
 .navigation {
@@ -319,6 +324,66 @@ picture img {
   margin-bottom: 20px;
 }
 
+/* Vehicle page */
+.vehicle-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  gap: 1rem; 
+}
+
+/* For Image */
+.vehicleImg {
+  flex: 1 1 40%; 
+}
+
+#vehicle-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px; 
+}
+
+/* For Info */
+.vehicle-info {
+  flex: 1 1 50%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for price */
+.vehicle-info .price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-shadow: 0 1px 1px var(--font-color);;
+  color: var(--primary-color);
+  background: linear-gradient(90deg, #eee4ed, #ede9ee);
+  padding: 0.5rem;
+  border-radius: 5px;
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for colors */
+.vehicle-info .colors {
+  background-color: #eee4ed;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 
 /* Media Query for smaller screen*/
 @media (max-width: 640px) {
@@ -401,5 +466,21 @@ picture img {
     font-size: 0.5em;
   }
 
+  .vehicle-details {
+    flex-direction: column; 
+    align-items: center; 
+  }
+
+  .vehicleImg {
+    flex: none;
+    margin-bottom: 1rem; 
+  }
+
+  .vehicle-info {
+    flex: none;
+    text-align: center;
+  }
 }
+
+
 
