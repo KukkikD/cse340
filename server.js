@@ -34,10 +34,7 @@ app.use("/inv", inventoryRoute)
 
 
 // Add a route that will cause an error
-app.get("/trigger-error", (req, res, next) => {
-  // Added intentional error generation
-  next(new Error("Intentional Error"))
-})
+app.get("/trigger-error", utilities.handleErrors(baseController.triggerError));
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

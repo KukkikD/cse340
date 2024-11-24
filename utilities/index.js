@@ -5,57 +5,134 @@ const Util = {}
  * Constructs the nav HTML unordered list
  ************************** */
 Util.getNav = async function (req, res, next) {
-  let data = await invModel.getClassifications()
-  console.log(data)
-  let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
-  data.rows.forEach((row) => {
-    list += "<li>"
-    list +=
-      '<a href="/inv/type/' +
-      row.classification_id +
-      '" title="See our inventory of ' +
-      row.classification_name +
-      ' vehicles">' +
-      row.classification_name +
-      "</a>"
-    list += "</li>"
-  })
-  list += "</ul>"
-  return list
+  try {
+    let data = await invModel.getClassifications()
+    if (!data || !data.rows || data.rows.length === 0) {
+      throw new Error("No classifications found")
+    }
+    let list = "<ul>"
+    list += '<li><a href="/" title="Home page">Home</a></li>'
+    data.rows.forEach((row) => {
+      list += "<li>"
+      list +=
+        '<a href="/inv/type/' +
+        row.classification_id +
+        '" title="See our inventory of ' +
+        row.classification_name +
+        ' vehicles">' +
+        row.classification_name +
+        "</a>"
+      list += "</li>"
+    })
+    list += "</ul>"
+    return list
+  } catch (err) {
+    console.error("Error generating navigation:", err.message)
+    throw err // send to error handler
+  }
 }
 
 /* **************************************
-* Build the classification view HTML
-* ************************************ */
-Util.buildClassificationGrid = async function(data){
-  let grid
-  if(data.length > 0){
-    grid = '<ul id="inv-display">'
-    data.forEach(vehicle => { 
+ * Build the classification view HTML
+ ************************************** */
+Util.buildClassificationGrid = async function (data) {
+  try {
+    if (!data || data.length === 0) {
+      return '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+    }
+    let grid = '<ul id="inv-display">'
+    data.forEach((vehicle) => {
       grid += '<li>'
-      grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
-      + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-      + 'details"><img src="' + vehicle.inv_thumbnail 
-      +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
-      +' on CSE Motors" /></a>'
+      grid +=
+        '<a href="../../inv/detail/' +
+        vehicle.inv_id +
+        '" title="View ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        ' details"><img src="' +
+        vehicle.inv_thumbnail +
+        '" alt="Image of ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        ' on CSE Motors" /></a>'
       grid += '<div class="namePrice">'
-      grid += '<hr />'
-      grid += '<h2>'
-      grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
-      + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
-      grid += '</h2>'
-      grid += '<span>$' 
-      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
-      grid += '</div>'
-      grid += '</li>'
+      grid += "<hr />"
+      grid += "<h2>"
+      grid +=
+        '<a href="../../inv/detail/' +
+        vehicle.inv_id +
+        '" title="View ' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        ' details">' +
+        vehicle.inv_make +
+        " " +
+        vehicle.inv_model +
+        "</a>"
+      grid += "</h2>"
+      grid +=
+        "<span>$" +
+        new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
+        "</span>"
+      grid += "</div>"
+      grid += "</li>"
     })
-    grid += '</ul>'
-  } else { 
-    grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+    grid += "</ul>"
+    return grid
+  } catch (err) {
+    console.error("Error building classification grid:", err.message)
+    throw err
   }
-  return grid
+}
+
+
+/* ****************************************
+ * Build the vehicle details view HTML
+ **************************************** */
+Util.buildVehicleDetails = function (vehicle) {
+  try {
+    if (!vehicle) {
+      throw new Error("Vehicle data is missing")
+    }
+    let details = `
+      <div class="vehicle-details">
+        <section class ="vehicleImg">
+          <img id="vehicle-img" src="${vehicle.inv_image || "#"}" alt="Image of ${
+      vehicle.inv_make || "Unknown Make"
+    } ${vehicle.inv_model || "Unknown Model"}">
+        </section>
+        <section class ="vehicle-info">
+        <h2>${vehicle.inv_make || "Unknown Make"} ${
+      vehicle.inv_model || "Unknown Model"
+    } Details:</h2>
+          <p class="price"><strong>Price:</strong> $${
+            vehicle.inv_price
+              ? new Intl.NumberFormat("en-US").format(vehicle.inv_price)
+              : "N/A"
+          }</p>
+          <p><strong>Description:</strong> ${
+            vehicle.inv_description || "No description available"
+          }</p>
+          <p class="colors"><strong>Color:</strong> ${
+            vehicle.inv_color || "Unknown"
+          }</p>
+          <p><strong>Mileage:</strong> ${
+            vehicle.inv_miles
+              ? new Intl.NumberFormat("en-US").format(vehicle.inv_miles) +
+                " miles"
+              : "N/A"
+          }</p>
+        </section>
+      </div>
+    `
+    return details
+  } catch (err) {
+    console.error("Error building vehicle details:", err.message)
+    throw err
+  }
 }
 
 /* ****************************************
@@ -63,31 +140,10 @@ Util.buildClassificationGrid = async function(data){
  * Wrap other function in this for 
  * General Error Handling
  **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-
-/* ****************************************
- * Build the vehicle details view HTML
- **************************************** */
-Util.buildVehicleDetails = function(vehicle) {
-  let details = `
-    <div class="vehicle-details">
-      <section class ="vehicleImg">
-        <img id="vehicle-img" src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
-      </section>
-      <section class ="vehicle-info">
-      <h2>${vehicle.inv_make} ${vehicle.inv_model} Details:</h2>
-        <p class="price"><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</p>
-        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
-        <p class="colors"><strong>Color:</strong> ${vehicle.inv_color}</p>
-        <p><strong>Mileage:</strong> ${new Intl.NumberFormat('en-US').format(vehicle.inv_miles)} miles</p>
-      </section>
-    </div>
-  `
-  return details
-}
-
+Util.handleErrors = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next)
 
 
 module.exports = Util
 
-//line 82: the mileage is formatted correctly with commas for thousands separators
+//line 131: the mileage is formatted correctly with commas for thousands separators
