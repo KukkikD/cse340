@@ -34,11 +34,11 @@ invCont.buildByVehicleId = async function (req, res, next) {
     const vehicle_id = req.params.vehicleId
     const vehicleData = await invModel.getVehicleById(vehicle_id)
 
-     // ตรวจสอบว่า vehicleData มีข้อมูลหรือไม่
+     // check vehicleData 
     if (!vehicleData) {
     const err = new Error("Vehicle not found")
     err.status = 404
-    return next(err)  // ถ้าไม่พบข้อมูลให้ส่งไปที่ error handler
+    return next(err)  // send to error handler
     }
     
     const nav = await utilities.getNav()

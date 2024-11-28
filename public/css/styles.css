@@ -314,8 +314,9 @@ picture img {
 .notice {
   text-align: center;
   font-size: 18px;
-  color: #888;
+  color: #4d4646;
   margin: 20px 0;
+  text-decoration: none;
 }
 
 /*Error page */
@@ -383,6 +384,128 @@ picture img {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+/* Login Page */
+
+.login form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid var(--font-color);
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: bold;
+}
+
+.login label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.login input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.login button {
+  width: 30%;
+  padding: 10px;
+  background: var(--secondary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+.login button:hover {
+  background: #865c71;
+}
+
+.login p {
+  color: var(--background-color);
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.login a {
+  color: var(--background-color); 
+  text-decoration: underline;
+  font-weight: bold; 
+  font-style: italic;
+  padding: 5px 10px;  
+}
+
+.login a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Flash message */
+.flash-message {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Register form */
+.register form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  background: var(--background-color);
+  color: var(--font-color);
+  font-weight: bold;
+}
+
+.register legend{
+  font-weight: bold;
+  font-size: medium;
+  color: var(--primary-color);
+  text-shadow: 0 1px 1px var(--font-color);
+  margin-bottom: 20px;
+}
+
+.register input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.register button {
+  width: 30%;
+  padding: 10px;
+  background: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+.register button:hover {
+  background: #865c71;
+}
+
 
 
 /* Media Query for smaller screen*/
