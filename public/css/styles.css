@@ -517,7 +517,7 @@ picture img {
 
 
 /* add the sign for input */
-input:valid {
+.register input:valid {
   border: 2px solid #28a745; /* green when user fill correctly*/
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="green"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>');
   background-repeat: no-repeat;
@@ -525,7 +525,7 @@ input:valid {
   background-size: 20px 20px; 
 }
 
-input:invalid {
+.register input:invalid {
   border: 2px solid #dc3545; /* red when typo error */
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="red"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-11.293a1 1 0 00-1.414 0L10 9.586 7.707 7.293a1 1 0 10-1.414 1.414L8.586 11l-2.293 2.293a1 1 0 101.414 1.414L10 12.414l2.293 2.293a1 1 0 001.414-1.414L11.414 11l2.293-2.293a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>');
   background-repeat: no-repeat;
