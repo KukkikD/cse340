@@ -533,6 +533,159 @@ picture img {
   background-size: 20px 20px;
 }
 
+/* Management View */
+#add-inv {
+  list-style-type: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+#add-inv li{
+  margin-bottom: 10px;
+}
+
+/*Add-Classification */
+.add-clasification form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid var(--font-color);
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: bold;
+}
+
+.add-clasification label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.add-clasification input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.add-clasification button {
+  width: 50%;
+  padding: 10px;
+  background: var(--secondary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+.add-clasification button:hover {
+  background: #865c71;
+}
+
+.add-clasification p {
+  color: var(--background-color);
+  text-align: center;
+  font-style: italic;
+  font-size: smaller;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.add-clasification input:valid {
+  border: 2px solid #28a745; /* green when user fill correctly*/
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="green"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px; 
+}
+
+.add-clasification input:invalid {
+  border: 2px solid #dc3545; /* red when typo error */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="red"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-11.293a1 1 0 00-1.414 0L10 9.586 7.707 7.293a1 1 0 10-1.414 1.414L8.586 11l-2.293 2.293a1 1 0 101.414 1.414L10 12.414l2.293 2.293a1 1 0 001.414-1.414L11.414 11l2.293-2.293a1 1 0 000-1.414z" clip-rule="evenodd"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+}
+
+/*Add-inventory */
+.add-inv form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid var(--font-color);
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: bold;
+}
+
+.add-inv label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.add-inv input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#inv_description {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+#inv_color, #inv_year, #inv_miles, #inv_price{
+  width: 50%;
+}
+
+.add-inv button {
+  width: 50%;
+  padding: 10px;
+  background: var(--secondary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+.add-inv button:hover {
+  background: #865c71;
+}
+
+.add-inv p {
+  color: var(--background-color);
+  text-align: center;
+  font-style: italic;
+  font-size: smaller;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+#classificationList{
+  width: 50%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
 
 /* Media Query for smaller screen*/
