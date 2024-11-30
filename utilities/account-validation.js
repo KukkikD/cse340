@@ -1,7 +1,9 @@
 const utilities = require(".")
-  const { body, validationResult } = require("express-validator")
-  const validate = {}
+const { body, validationResult } = require("express-validator")
+const validate = {}
 const accountModel = require("../models/account-model")
+const bcrypt = require('bcryptjs');
+
 
 /*  **********************************
   *  Registration Data Validation Rules
@@ -79,9 +81,9 @@ validate.checkRegData = async (req, res, next) => {
 
 
 /*  **********************************
-  *  Registration Data Validation Rules
+  *  login Data Validation Rules
   * ********************************* */
-validate.loginRule = () => {
+validate.loginRules = () => {
     return [
       // Email must have in DB
       body("account_email")
@@ -92,6 +94,7 @@ validate.loginRule = () => {
         .normalizeEmail() // use validator.js for normalize email
         .withMessage("A valid email is required.")
         .custom(async (account_email) => {
+      
           const emailExists = await accountModel.checkExistingEmail(account_email);
           if (!emailExists) {
             throw new Error("Email does not exist. Please register.");
@@ -99,7 +102,7 @@ validate.loginRule = () => {
         }),
   
       // Password must match the information in the database.
-      body("account_password")
+     /* body("account_password")
         .trim()
         .notEmpty()
         .withMessage("Password is required.")
@@ -110,13 +113,49 @@ validate.loginRule = () => {
             throw new Error("Invalid email or password."); // in case no email in DB
           }
   
-          // validate password by bcrypt
-         /* const isMatch = await bcrypt.compare(account_password, account.account_password);
+          //validate password by bcrypt
+         const isMatch = await bcrypt.compare(account_password, account.account_password);
           if (!isMatch) {
             throw new Error("Invalid email or password."); // password not match in DB
-          }*/
+          }
         }),
-    ];
-  };
-  
+    ]
+  } */
+
+        // password is required and must be strong password
+        body("account_password")
+        .trim()
+        .notEmpty()
+        .isStrongPassword({
+          minLength: 12,
+          minLowercase: 1,
+          minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 1,
+        })
+        .withMessage("Password does not meet requirements."),
+    ]
+    }
+
+
+    /* ******************************
+ * Check data and return errors or continue to login
+ * ***************************** */
+    validate.checkLoginData = async (req, res, next) => {
+      const { account_email } = req.body
+      let errors = []
+      errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        res.render("account/login", {
+          errors,
+          title: "login",
+          nav,
+          account_email,
+        })
+        return
+      }
+      next()
+    }
+
   module.exports = validate

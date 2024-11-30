@@ -5,13 +5,15 @@
       res.redirect('/')
     } %>
 
-    <% if (errors) { %>
-      <ul class="notice">
-     <% errors.array().forEach(error => { %>
-       <li><%= error.msg %></li>
-    <%  }) %>
-     </ul>
-    <% } %>
+   <!-- Show Flash Message -->
+  <%- messages() %>
+   <% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
     
     <div class="register">
       <form action="/account/register" method="post">
