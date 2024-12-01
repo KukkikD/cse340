@@ -26,6 +26,7 @@ validate.addClassificationRules = () => {
 * ********************************* */
 validate.checkClassificationData = async (req, res, next) => {
     let errors = []
+    const { classification_name } = req.body
     errors = validationResult(req)
     if (!errors.isEmpty()) {
       let nav = await utilities.getNav()
@@ -33,6 +34,7 @@ validate.checkClassificationData = async (req, res, next) => {
         errors,
         title: "Add New Classification",
         nav,
+        classification_name,
    
       })
       return
@@ -90,6 +92,9 @@ validate.addInventoryRules = () => {
  * Check add inventory data
  * ***************************** */
 validate.checkInventoryData = async (req, res, next) => {
+
+    const { classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year,  inv_miles, inv_color } = req.body
+
     let errors = []
     errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -100,6 +105,16 @@ validate.checkInventoryData = async (req, res, next) => {
         title: "Add New Vechicle",
         typeSelector,
         nav,
+        classification_id, 
+        inv_make, 
+        inv_model, 
+        inv_description, 
+        inv_image, 
+        inv_thumbnail, 
+        inv_price, 
+        inv_year,  
+        inv_miles, 
+        inv_color,
       })
       return
     }
