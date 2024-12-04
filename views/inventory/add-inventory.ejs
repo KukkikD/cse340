@@ -22,36 +22,41 @@
             <div class="typeSelector"><%- typeSelector %></div><br>
             
             <label for="inv_make">Make</label>
-            <input type="text" id="inv_make" name="inv_make" required pattern="^[a-zA-Z0-9\s-]+$" value="<%= locals.inv_make %>"><br><br>
-            
+            <input type="text" id="inv_make" name="inv_make" required pattern="^[a-zA-Z0-9\s-]+$"
+                placeholder="e.g., Toyota" value="<%= locals.inv_make %>"><br><br>
+
             <label for="inv_model">Model</label>
-            <input type="text" id="inv_model" name="inv_model" required pattern="^[a-zA-Z0-9\s-]+$" value="<%= locals.inv_model %>"><br><br>
+            <input type="text" id="inv_model" name="inv_model" required pattern="^[a-zA-Z0-9\s-]+$"
+                placeholder="e.g., Corolla" value="<%= locals.inv_model %>"><br><br>
 
             <label for="inv_description">Description</label>
-            <textarea name="inv_description" id="inv_description" pattern="^[a-zA-Z0-9\s-]{1,}$" required value="<%= locals.inv_description %>"></textarea><br><br>
+            <textarea name="inv_description" id="inv_description" required
+                    placeholder="Enter a detailed description."><%= locals.inv_description %></textarea><br><br>
 
             <label for="inv_image">Image</label>
-            <input type="text" id="inv_image" name="inv_image" required readonly value="/images/vehicles/no-image.png"><br><br>
+            <input type="text" id="inv_image" name="inv_image" required readonly
+                value="/images/vehicles/no-image.png"><br><br>
 
             <label for="inv_thumbnail">Thumbnail</label>
-            <input type="text" id="inv_thumbnail" name="inv_thumbnail" required readonly value="/images/vehicles/no-image-tn.png"><br><br>
+            <input type="text" id="inv_thumbnail" name="inv_thumbnail" required readonly
+                value="/images/vehicles/no-image-tn.png"><br><br>
 
             <label for="inv_price">Price</label>
-            <input type="text" id="inv_price" name="inv_price" pattern="^[0-9]{+}$" required value="<%= locals.inv_price %>" 
-            placeholder="decimal or integer"><br><br>
+            <input type="text" id="inv_price" name="inv_price" required pattern="^\d+(\.\d{1,2})?$"
+                placeholder="e.g., 25000 or 25000.99" value="<%= locals.inv_price %>"><br><br>
 
             <label for="inv_year">Year</label>
-            <input type="text" id="inv_year" name="inv_year" pattern="^[0-9]{4}$" required value="<%= locals.inv_year %>" 
-            placeholder="4-digit year"><br><br>
-            
+            <input type="text" id="inv_year" name="inv_year" required pattern="^\d{4}$"
+                placeholder="e.g., 2017" value="<%= locals.inv_year %>"><br><br>
+
             <label for="inv_miles">Miles</label>
-            <input type="text" id="inv_miles" name="inv_miles" pattern="^[0-9]{+}$" required value="<%= locals.inv_miles %>" 
-            placeholder="digits only"><br>
+            <input type="text" id="inv_miles" name="inv_miles" required pattern="^\d+$"
+                placeholder="e.g., 39500" value="<%= locals.inv_miles %>"><br><br>
 
             <label for="inv_color">Color</label>
-            <input type="text" id="inv_color" name="inv_color" pattern="^[a-zA-Z]+$" value="<%= locals.inv_color %>"><br><br>
-            
-            <button type="submit">Add Vechicle</button>
+            <input type="text" id="inv_color" name="inv_color" pattern="^[a-zA-Z]+$"
+                placeholder="e.g., Blue" value="<%= locals.inv_color %>"><br><br>
 
+            <button type="submit">Add Vehicle</button>
         </form>
     </div>
