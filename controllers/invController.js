@@ -56,17 +56,19 @@ invCont.buildByVehicleId = async function (req, res, next) {
 }
 
 /* ***************************
- *  Render Inventory Management View
+ * Week 04 : activity
+ *  Build Inventory Management View
  * ************************** */
 invCont.renderManagementView = async function (req, res, next) {
   try {
     const nav = await utilities.getNav()
+    const classificationSelect = await utilities.chooseClassification()
     //req.flash("notice", "Inventory management loaded successfully!") 
     res.render("./inventory/management", {
       title: "Vehicle Management",
       nav,
       errors:null,
-      
+      classificationSelect,
     })
   } catch (err) {
     next(err) // Pass error to the error handler
@@ -173,6 +175,19 @@ invCont.addNewInventory = async function (req, res, next) {
       typeSelector, // Pass the typeSelector variable to the view.
       errors: null,     
     })
+  }
+}
+
+/* ***************************
+ *  Return Inventory by Classification As JSON
+ * ************************** */
+invCont.getInventoryJSON = async (req, res, next) => {
+  const classification_id = parseInt(req.params.classification_id)
+  const invData = await invModel.getInventoryByClassificationId(classification_id)
+  if (invData[0].inv_id) {
+    return res.json(invData)
+  } else {
+    next(new Error("No data returned"))
   }
 }
 

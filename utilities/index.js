@@ -143,7 +143,7 @@ Util.buildVehicleDetails = function (vehicle) {
 Util.chooseClassification = async function (classification_id = null) {
   let data = await invModel.getClassifications()
   let classificationList =
-    '<label class="typeSelector" for="classificationList">Classification</label><select name="classification_id" id="classificationList" required>'
+    '<select name="classification_id" id="classificationList" required>'
   classificationList += "<option value=''>Choose a Classification</option>"
   data.rows.forEach((row) => {
     classificationList += '<option value="' + row.classification_id + '"'

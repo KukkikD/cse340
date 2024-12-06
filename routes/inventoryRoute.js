@@ -28,6 +28,9 @@ router.get("/add-inventory", utilities.handleErrors(invController.addInventory))
 router.post("/add-inventory", regValidate.addInventoryRules(),
 regValidate.checkInventoryData, utilities.handleErrors(invController.addNewInventory))
 
+//Week 05: getInventory for AJX route.
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
 
 module.exports = router;
 
