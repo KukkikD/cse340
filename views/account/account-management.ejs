@@ -1,0 +1,20 @@
+<!-- Content Heading Section -->
+<% if (title) { %>
+    <h1 class="title_h1"><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+     <!-- Show Flash Message -->
+    <%- messages() %>
+     <% if (errors) { %>
+      <ul class="notice">
+     <% errors.array().forEach(error => { %>
+       <li><%= error.msg %></li>
+    <%  }) %>
+     </ul>
+    <% } %>
+
+    <div class = "account-mgn">
+      <p>You're logged in.</p>
+    </div>

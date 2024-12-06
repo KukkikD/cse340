@@ -15,8 +15,9 @@ const inventoryRoute = require("./routes/inventoryRoute") // Import the route
 const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require("./database/")
-const accountRoute = require("./routes/accountRoute");
-const bodyParser = require("body-parser");
+const accountRoute = require("./routes/accountRoute")
+const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 /* ***********************
  * Middleware
@@ -40,8 +41,15 @@ app.use(function(req, res, next){
 })
 
 //Activity of Account: Process Registration
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+//Week05 Login activity
+app.use(cookieParser())
+
+//Week05 cookie activity
+app.use(utilities.checkJWTToken)
+
 
 /* ***********************
  * View Engine and Templates
@@ -62,7 +70,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute) 
 
 // Account routes from Week04: Activity
-app.use("/account", accountRoute); 
+app.use("/account", accountRoute)
 
 
 // Add a route that will cause an error

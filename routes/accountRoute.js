@@ -12,12 +12,19 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin));
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
 // Process the registration data
-router.post('/register', regValidate.registationRules(),
+router.post("/register", regValidate.registationRules(),
 regValidate.checkRegData, utilities.handleErrors(accountController.registerAccount))
 
-// Process the login attempt
+/* **************************************
+* Process  login
+* week04 : stickiness activity
+* modify in week 05 : login process activity 
+* ************************************ */
 router.post("/login", regValidate.loginRules(),
-regValidate.checkLoginData, utilities.handleErrors(accountController.loginAccount))
+regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin)) //modifiy from accountController.loginAccount
+
+// week 05: Build account management view route
+router.get("/account-management", utilities.handleErrors(accountController.buildAccountManagementView));
 
 
 module.exports = router;
