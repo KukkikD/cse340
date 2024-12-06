@@ -50,8 +50,7 @@
                 placeholder="e.g., 2017" value="<%= locals.inv_year %>"><br><br>
 
             <label for="inv_miles">Miles</label>
-            <input type="text" id="inv_miles" name="inv_miles" required pattern="^\d+$"
-                placeholder="e.g., 39500" value="<%= locals.inv_miles %>"><br><br>
+            <input type="number" id="inv_miles" name="inv_miles" required min="0" step="1" placeholder="e.g., 39500" value="<%= locals.inv_miles %>"><br><br>
 
             <label for="inv_color">Color</label>
             <input type="text" id="inv_color" name="inv_color" pattern="^[a-zA-Z]+$"
