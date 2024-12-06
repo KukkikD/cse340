@@ -104,7 +104,7 @@ async function registerAccount(req, res) {
       errors: null,
     })
   }
-}*/
+} // ex. function from Week04 before add the Jwt to compare hash password now use the function accountLogin instead of this function*/
 
 /* ****************************************
  *  Process login request
