@@ -26,21 +26,18 @@ async function getInventoryByClassificationId(classification_id) {
 }
 
 /* ***************************
- *  Get Vechicle details by classification_id
+ *  Get Vechicle details by inv_id
  * ************************** */
-async function getVehicleById(id) {
+async function getVehicleById(inv_id) {
   try {
     const result = await pool.query(
-      `SELECT 
-         inv_id, inv_make, inv_model, inv_year, inv_description, 
-         inv_image, inv_thumbnail, inv_price, inv_miles, inv_color,
-         classification.classification_name
-       FROM inventory 
-       INNER JOIN classification 
-       ON inventory.classification_id = classification.classification_id
-       WHERE inv_id = $1`, 
-      [id]
+      `SELECT * FROM public.inventory AS i 
+      INNER JOIN public.classification AS c 
+      ON i.classification_id = c.classification_id 
+      WHERE i.inv_id = $1;`,
+      [inv_id]
     )
+    console.log(result.rows) // Check query result
     return result.rows[0] // Get single row result (car details)
   } catch (error) {
     console.error('Error getting vehicle by ID:', error)

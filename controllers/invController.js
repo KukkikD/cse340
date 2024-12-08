@@ -93,6 +93,7 @@ invCont.addClassification = async function (req, res, next) {
  * ************************** */
 invCont.addNewClassification = async function (req, res, next) {
   const { classification_name } = req.body
+  const classificationSelect = await utilities.chooseClassification()
   const addResult = await invModel.addNewClassification(
     classification_name
   )
@@ -105,12 +106,15 @@ invCont.addNewClassification = async function (req, res, next) {
       title: "Vehicle Management", 
       nav: await utilities.getNav(),  
       errors:null,    
+      classificationSelect,
     })
+
   } else {
     req.flash(
       "notice", 
       "Sorry! the classification was not added."
     )
+
     res.status(501).render("./inventory/add-classification", {
       title: "Add New Classification", 
       nav: await utilities.getNav(),
@@ -140,16 +144,19 @@ invCont.addInventory = async function (req, res, next) {
 invCont.addNewInventory = async function (req, res, next) {
   const nav = await utilities.getNav()
 
-  let typeSelector
+ /* let typeSelector
   try {
     // Use a function to create a dropdown for selecting types.
     typeSelector = await utilities.chooseClassification()
   } catch (error) {
     console.error("Error creating typeSelector:", error)
-  }
+  } */
 
   const { classification_id, inv_make, inv_model, inv_description, inv_image, 
     inv_thumbnail, inv_price, inv_year,  inv_miles, inv_color } = req.body
+
+  const classificationSelect = await utilities.chooseClassification()
+
   const addResult = await invModel.addNewInventory(
     classification_id, inv_make, inv_model, inv_description, inv_image, 
       inv_thumbnail, inv_price, inv_year, inv_miles, inv_color)
@@ -163,7 +170,9 @@ invCont.addNewInventory = async function (req, res, next) {
       title: "Vehicle Management", 
       nav,
       errors: null,
+      classificationSelect,
     })
+
   } else {
     req.flash(
       "notice", 
@@ -172,7 +181,7 @@ invCont.addNewInventory = async function (req, res, next) {
     res.status(501).render("./inventory/add-inventory", {
       title: "Add Inventory", 
       nav,
-      typeSelector, // Pass the typeSelector variable to the view.
+      //typeSelector, // Pass the typeSelector variable to the view.
       errors: null,     
     })
   }
@@ -189,6 +198,38 @@ invCont.getInventoryJSON = async (req, res, next) => {
   } else {
     next(new Error("No data returned"))
   }
+}
+
+
+/* ***************************
+ *  Build edit inventory view
+ * ************************** */
+invCont.editInventoryView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  const itemData = await invModel.getVehicleById(inv_id)
+  console.log(itemData) //ตรวจสอบข้อมูบ Classification ID
+  const typeSelector = await utilities.chooseClassification(itemData.classification_id)
+  console.log(itemData.classification_id) //check the data
+  const itemName = `${itemData[0].inv_make} ${itemData.inv_model}`
+  res.render("./inventory/edit-inventory", {
+    title: "Edit " + itemName,
+    nav,
+    classificationSelect: typeSelector,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_description: itemData.inv_description,
+    inv_image: itemData.inv_image,
+    inv_thumbnail: itemData.inv_thumbnail,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+    inv_color: itemData.inv_color,
+    classification_id: itemData.classification_id,
+    errors: null,
+  })
 }
 
 

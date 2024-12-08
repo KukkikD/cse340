@@ -123,9 +123,8 @@ Util.buildVehicleDetails = function (vehicle) {
           }</p>
           <p><strong>Mileage:</strong> ${
             vehicle.inv_miles
-              ? new Intl.NumberFormat("en-US").format(vehicle.inv_miles) +
-                " miles"
-              : "N/A"
+            ? vehicle.inv_miles + " miles"
+            : "N/A"
           }</p>
         </section>
       </div>
@@ -141,22 +140,31 @@ Util.buildVehicleDetails = function (vehicle) {
 * Build the selection for the add inventory view
 * ************************************ */
 Util.chooseClassification = async function (classification_id = null) {
-  let data = await invModel.getClassifications()
-  let classificationList =
-    '<select name="classification_id" id="classificationList" required>'
-  classificationList += "<option value=''>Choose a Classification</option>"
-  data.rows.forEach((row) => {
-    classificationList += '<option value="' + row.classification_id + '"'
-    if (
-      classification_id != null &&
-      row.classification_id == classification_id
-    ) {
-      classificationList += " selected "
-    }
-    classificationList += ">" + row.classification_name + "</option>"
-  })
-  classificationList += "</select>"
-  return classificationList
+  try {
+    let data = await invModel.getClassifications()
+    console.log(data.rows) // ตรวจสอบข้อมูลที่ได้จาก getClassifications
+
+    let classificationList =
+      '<select name="classification_id" id="classificationList" required>'
+    classificationList += "<option value=''>Choose a Classification</option>"
+
+    data.rows.forEach((row) => {
+      classificationList += '<option value="' + row.classification_id + '"'
+      if (
+        classification_id != null &&
+        parseInt(row.classification_id) === parseInt(classification_id)
+      ) {
+        classificationList += " selected "
+      }
+      classificationList += ">" + row.classification_name + "</option>"
+    })
+
+    classificationList += "</select>"
+    return classificationList
+  } catch (error) {
+    console.error("Error in chooseClassification:", error)
+    throw error
+  }
 }
 
 /* ****************************************

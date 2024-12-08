@@ -1,0 +1,62 @@
+<!-- Content Heading Section -->
+<% if (title) { %>
+    <h1 class="title_h1"><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+    <%- messages() %>
+
+    <% if (errors) { %>
+        <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <%  }) %>
+        </ul>
+        <% } %>
+
+
+    <div class="add-inv">
+        <form action="/inv/update" method="post">
+
+            <label class="typeSelector" for="classificationList">Classification</label>
+            <div class="typeSelector"><%- typeSelector %></div><br>
+            
+            <label for="inv_make">Make</label>
+            <input type="text" id="inv_make" name="inv_make" required pattern="^[a-zA-Z0-9\s-]+$"
+                placeholder="e.g., Toyota" value="<%= locals.inv_make %>"><br><br>
+
+            <label for="inv_model">Model</label>
+            <input type="text" id="inv_model" name="inv_model" required pattern="^[a-zA-Z0-9\s-]+$"
+                placeholder="e.g., Corolla" value="<%= locals.inv_model %>"><br><br>
+
+            <label for="inv_description">Description</label>
+            <textarea name="inv_description" id="inv_description" required
+                    placeholder="Enter a detailed description."><%= locals.inv_description %></textarea><br><br>
+
+            <label for="inv_image">Image</label>
+            <input type="text" id="inv_image" name="inv_image" required readonly
+                value="/images/vehicles/no-image.png"><br><br>
+
+            <label for="inv_thumbnail">Thumbnail</label>
+            <input type="text" id="inv_thumbnail" name="inv_thumbnail" required readonly
+                value="/images/vehicles/no-image-tn.png"><br><br>
+
+            <label for="inv_price">Price</label>
+            <input type="text" id="inv_price" name="inv_price" required pattern="^\d+(\.\d{1,2})?$"
+                placeholder="e.g., 25000 or 25000.99" value="<%= locals.inv_price %>"><br><br>
+
+            <label for="inv_year">Year</label>
+            <input type="text" id="inv_year" name="inv_year" required pattern="^\d{4}$"
+                placeholder="e.g., 2017" value="<%= locals.inv_year %>"><br><br>
+
+            <label for="inv_miles">Miles</label>
+            <input type="number" id="inv_miles" name="inv_miles" required min="0" step="1" placeholder="e.g., 39500" value="<%= locals.inv_miles %>"><br><br>
+
+            <label for="inv_color">Color</label>
+            <input type="text" id="inv_color" name="inv_color" pattern="^[a-zA-Z]+$"
+                placeholder="e.g., Blue" value="<%= locals.inv_color %>"><br><br>
+
+            <button type="submit">Update Vehicle</button>
+        </form>
+    </div>
