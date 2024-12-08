@@ -35,12 +35,13 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 router.get("/edit/:inv_id", utilities.handleErrors(invController.editInventoryView))
 
 //week 05: process update inventory 
-router.post("/update/", regValidate.addInventoryRules(), regValidate.checkInventoryUpdateData, utilities.handleErrors(invController.updateInventory)) 
+router.post("/update", regValidate.addInventoryRules(), regValidate.checkInventoryUpdateData, utilities.handleErrors(invController.updateInventory)) 
+
+//week05 :// add deleting view
+router.get("/delete/:inv_id", utilities.handleErrors(invController.deleteView))
 
 //week05 :// deleting process
-router.post("/delete/", utilities.handleErrors(invController.deleteInventoryObject))
-
-
+router.post("/delete", utilities.handleErrors(invController.deleteItem))
 
 
 module.exports = router;

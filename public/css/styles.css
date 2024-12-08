@@ -686,6 +686,11 @@ picture img {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+.delete-view h3{
+  color: var(--primary-color);
+  text-align: center;
+  margin-top: 20px;
+}
 
 
 /* Media Query for smaller screen*/
