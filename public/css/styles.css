@@ -313,8 +313,8 @@ picture img {
 /* Notices Styling */
 .notice {
   text-align: center;
-  font-size: 18px;
-  color: #4d4646;
+  font-size: medium;
+  color: #ee0707;
   margin: 20px 0;
   text-decoration: none;
 }
@@ -690,6 +690,19 @@ picture img {
   color: var(--primary-color);
   text-align: center;
   margin-top: 20px;
+}
+
+.account-mgn h2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.account-mgn p {
+  margin-bottom: 20px;
+}
+
+.account-mgn a {
+  margin-bottom: 40px;
 }
 
 

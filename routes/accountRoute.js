@@ -32,4 +32,10 @@ router.get("/account-management", utilities.handleErrors(accountController.build
 * *************************************** */
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView))
 
+/* ****************************************
+*  Route to build logout view
+* week 05 : Account Management 
+* *************************************** */
+router.get("/logout", utilities.checkLogin, utilities.handleErrors(accountController.buildLogout))
+
 module.exports = router;

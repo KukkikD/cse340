@@ -162,8 +162,20 @@ async function buildAccountManagementView(req, res, next) {
     })
 }
 
+/* ****************************************
+*  Week 05: Account management
+*  build logout view 
+* *************************************** */
+async function buildLogout(req, res, next) {
+  let nav = await utilities.getNav()
+  res.clearCookie('jwt')
+  req.flash("notice", "You have loged out.")
+  res.redirect("/")
+}
 
-module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView};
+
+
+module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, buildLogout};
 
 
 // line 127 : uses the bcrypt.compare() function which takes the incoming, plain text password and the hashed password from the database and compares them to see if they match.
