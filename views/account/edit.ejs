@@ -1,0 +1,48 @@
+<!-- Content Heading Section -->
+<% if (title) { %>
+    <h1 class="title_h1"><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+   <!-- Show Flash Message -->
+  <%- messages() %>
+   <% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+    
+    <div class="register">
+      <form action="/account/edit/info" method="post" id="updateInfo">
+
+            <label for="account_firstname">First Name:</label>
+            <input type="text" id="account_firstname" name="account_firstname" required value="<%= locals.account_firstname %>">
+
+            <label for="account_lastname">Last Name:</label>
+            <input type="text" id="account_lastname" name="account_lastname" required value="<%= locals.account_lastname %>">
+
+            <label for="account_email">Email:</label>
+            <input type="email" id="account_email" name="account_email" required placeholder="Enter a valid email address" value="<%= locals.account_email %>">
+            <button type="submit">Confirm update</button>
+      </form>
+      </div>
+
+      <div class="register">
+      <form action="/account/edit/password" method="post" id="updatePassword">
+            <label for="account_password">Password:</label> 
+            <!-- Eye icon to toggle password visibility -->
+            <!-- <span id="togglePassword" class="eye-icon">&#128065;</span> -->
+            <input type="password" id="account_password" name="account_password"  pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
+            <span id="password">Passwords must be at least **12 characters** long, contain **1 uppercase letter**, **1 number**, and **1 special character**.</span> 
+            
+            <button type="submit">Confirm update</button>
+      </form>
+    </div>
+    <!-- <link rel="script" href="/js/registerIcon.css"> -->
+    <script src="../../js/scriptUpdate.js"></script>
+
+    <script src="/js/script.js"></script>
+    

@@ -33,9 +33,42 @@ router.get("/account-management", utilities.handleErrors(accountController.build
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView))
 
 /* ****************************************
-*  Route to build logout view
-* week 05 : Account Management 
+*  Route to  logout 
+* week 05 : Account Management task 1
 * *************************************** */
-router.get("/logout", utilities.checkLogin, utilities.handleErrors(accountController.buildLogout))
+router.get("/logout", utilities.checkLogin, utilities.handleErrors(accountController.logoutAccount))
+
+/* ****************************************
+*  restricted area route with account type check 
+* week 05 : Account Management task 2
+* *************************************** */
+router.get(
+    "/restricted", utilities.checkLogin,
+    utilities.checkAccountType, // Middleware check account type
+    utilities.handleErrors(accountController.restrictedAreaView)
+  );
+
+/* ****************************************
+*  Route to build edit account view
+* week 05 : Account Management task3
+* *************************************** */
+router.get("/edit/:account_id", utilities.checkLogin, utilities.handleErrors(accountController.buildEditAccount))
+
+
+/* ****************************************
+*  Process the info update 
+* week 05 : Account Management task5
+* *************************************** */
+router.post("/edit/info", regValidate.UpdateInfoRules(), regValidate.checkUpdateInfoData, 
+    utilities.handleErrors (accountController.updateInfoData))
+  
+  
+/* ****************************************
+*  Process the password update
+* week 05 : Account Management task5
+* *************************************** */
+  router.post("/edit/password", regValidate.UpdatePasswordRules(), regValidate.checkUpdatePasswordData,
+    utilities.handleErrors(accountController.updatePassword))
+
 
 module.exports = router;

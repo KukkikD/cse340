@@ -60,18 +60,69 @@ async function loginAccount(account_email, account_password) {
   }
 
 /* *****************************
-* Return account data using email address
-* ***************************** */
-async function getAccountByEmail (account_email) {
+*   Return account data using id
+* *************************** */
+async function getAccountById (account_id) {
   try {
     const result = await pool.query(
-      'SELECT account_id, account_firstname, account_lastname, account_email, account_type, account_password FROM account WHERE account_email = $1',
-      [account_email])
+      'SELECT account_firstname, account_lastname, account_email FROM account WHERE account_id = $1',
+      [account_id])
     return result.rows[0]
   } catch (error) {
-    return new Error("No matching email found")
+    return new Error("No matching info found")
+  }
+}
+
+/* ***************************
+ *  Update account info Data
+ * ************************** */
+async function updateInfoData(
+  account_id,
+  account_firstname,
+  account_lastname, 
+  account_email
+) {
+  try {
+    const sql =
+      "UPDATE public.account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *"
+    const data = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("model error: " + error)
   }
 }
 
 
-module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, loginAccount};
+/* ***************************
+ *  Update account info Data
+ * ************************** */
+async function updatePassword(account_id, hashedPassword) {
+  //current hashedPassword
+  const currentPasswordSql = "SELECT account_password FROM accounts WHERE account_id = $1;"
+    try {
+    
+      const currentPasswordResult = await pool.query(currentPasswordSql, [account_id])
+      if (currentPasswordResult.rows.length > 0) {
+        const currentPassword = currentPasswordResult.rows[0].account_password;
+        if (currentPassword === hashedPassword) {
+          return false; // ถ้ารหัสผ่านเหมือนเดิม ให้คืนค่า false
+        }
+      }
+      const updateSql = "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *;"
+
+      const result = await pool.query(updateSql, [hashedPassword, account_id])
+
+      return result.rowCount > 0; // คืนค่า true ถ้ามีการอัปเดตข้อมูล
+
+  } catch (error) {
+    console.error('Error in updatePassword:', error);
+    return false;
+  }
+}
+
+module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, loginAccount, getAccountById, updateInfoData, updatePassword};

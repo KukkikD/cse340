@@ -20,17 +20,11 @@
       <p>You're logged in.</p> 
       <a id "edit-acc" href="/account/edit/<%= locals.accountData.account_id %>"> Edit Account Information </a>
 
-      <% if(locals.accountData.account_type === "Employee" || locals.accountData.account_type === "Admin" ) { %>
+      <% if(locals.accountData.account_type === 'admin' || locals.accountData.account_type === 'employee') { %>
 
-        <h3>
-            Inventory Management
-        </h3>
+        <h3>Inventory Management</h3>
 
-        <p>
-            <a href="/inv">
-                Manage Inventory
-            </a>
-        </p>
+        <p></p><a href="/"></a>Manage Inventory </a></p>
 
       <% } %>
 
