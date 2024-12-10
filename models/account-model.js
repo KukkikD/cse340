@@ -97,31 +97,23 @@ async function updateInfoData(
   }
 }
 
-
 /* ***************************
- *  Update account info Data
+ *  Update account password Data
  * ************************** */
-async function updatePassword(account_id, hashedPassword) {
-  //current hashedPassword
-  const currentPasswordSql = "SELECT account_password FROM accounts WHERE account_id = $1;"
-    try {
-    
-      const currentPasswordResult = await pool.query(currentPasswordSql, [account_id])
-      if (currentPasswordResult.rows.length > 0) {
-        const currentPassword = currentPasswordResult.rows[0].account_password;
-        if (currentPassword === hashedPassword) {
-          return false; // ถ้ารหัสผ่านเหมือนเดิม ให้คืนค่า false
-        }
-      }
-      const updateSql = "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *;"
-
-      const result = await pool.query(updateSql, [hashedPassword, account_id])
-
-      return result.rowCount > 0; // คืนค่า true ถ้ามีการอัปเดตข้อมูล
-
+async function updatePassword(
+  account_id,
+  account_password
+) {
+  try {
+    const sql =
+      "UPDATE public.account SET account_password = $1 WHERE account_id = $2 RETURNING *"
+    const data = await pool.query(sql, [
+      account_password,
+      account_id
+    ])
+    return data.rows[0]
   } catch (error) {
-    console.error('Error in updatePassword:', error);
-    return false;
+    console.error("model error: " + error)
   }
 }
 

@@ -184,8 +184,8 @@ const restrictedAreaView = async (req, res) => {
       accountData: res.locals.accountData,
     });
   } catch (error) {
-    console.error("Error displaying restricted area:", error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error displaying restricted area:", error)
+    res.status(500).send("Internal Server Error")
   }
 }
 
@@ -194,11 +194,11 @@ const restrictedAreaView = async (req, res) => {
  * *************************************** */
 async function buildEditAccount(req, res, next) {
   const accountId = parseInt(req.params.account_id);
-  const localId = parseInt(res.locals.accountData.account_id);
+  const localId = parseInt(res.locals.accountData.account_id)
 
   if (accountId === localId) {
     try {
-      const info = await accountModel.getAccountById(accountId);
+      const info = await accountModel.getAccountById(accountId)
       let nav = await utilities.getNav();
 
       res.render("account/edit", {
@@ -212,12 +212,12 @@ async function buildEditAccount(req, res, next) {
       });
     } catch (error) {
       console.error("Error fetching account info:", error);
-      req.flash("notice", "An error occurred while fetching account data.");
+      req.flash("notice", "An error occurred while fetching account data.")
       res.redirect("/account");
     }
   } else {
-    req.flash("notice", "Invalid access.");
-    res.redirect("/account");
+    req.flash("notice", "Invalid access.")
+    res.redirect("/account")
   }
 }
 
@@ -233,8 +233,8 @@ async function updateInfoData(req, res, next) {
   } = req.body;
 
   if (!account_firstname || !account_lastname || !account_email) {
-    req.flash("notice", "All fields are required.");
-    return res.redirect(`/account/edit/${account_id}`);
+    req.flash("notice", "All fields are required.")
+    return res.redirect(`/account/edit/${account_id}`)
   }
 
   try {
@@ -245,12 +245,13 @@ async function updateInfoData(req, res, next) {
       account_email
     );
 
-    req.flash("notice", "Congratulations, your information has been updated.");
-    res.redirect("/account");
+    req.flash("notice", "Congratulations, your information has been updated.")
+    res.redirect("/account")
+
   } catch (error) {
-    console.error("Error updating account info:", error);
-    req.flash("notice", "An unexpected error occurred while updating your information.");
-    res.status(500).redirect(`/account/edit/${account_id}`);
+    console.error("Error updating account info:", error)
+    req.flash("notice", "An unexpected error occurred while updating your information.")
+    res.status(500).redirect(`/account/edit/${account_id}`)
   }
 }
 
@@ -258,42 +259,28 @@ async function updateInfoData(req, res, next) {
  * Generate edit account password response
  * *************************************** */
 async function updatePassword(req, res, next) {
-  const {
+  const { 
     account_id,
-    account_password,
+    account_password
   } = req.body
-
-  if (!account_password) {
-    req.flash("notice", "Password field cannot be empty.")
-    return res.redirect(`/account/edit/${account_id}`)
-  }
-
+  let hashedPassword
   try {
-    // Fetch current account info
-    const currentInfo = await accountModel.getAccountById(account_id)
-    const isSamePassword = await bcrypt.compare(account_password, currentInfo.account_password)
-
-    if (isSamePassword) {
-      req.flash("notice", "The new password must be different from the current one.")
-      return res.redirect(`/account/edit/${account_id}`)
-    }
-
-    // Hash the new password
-    let hashedPassword = await bcrypt.hash(account_password, 10)
-
-    const updateResult = await accountModel.updatePassword(account_id, hashedPassword)
-
-    if (updateResult) {
-      req.flash("notice", "Password updated successfully.")
-    } else {
-      req.flash("notice", "No changes were made to the password.")
-    }
-
-    res.redirect("/account")
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
   } catch (error) {
-    console.error("Error updating password:", error)
-    req.flash("notice", "Sorry, there was an error processing the password update.")
-    res.status(500).redirect(`/account/edit/${account_id}`)
+    req.flash("notice", 'Sorry, there was an error processing the password update.')
+    res.status(501).redirect(`${account_id}`)
+  } 
+  const updateResult = await accountModel.updatePassword(
+    account_id,
+    hashedPassword
+  )
+  // const updateResult = null
+  if (updateResult) {
+    req.flash("notice", "Password updated successfully.")
+    res.redirect("/account")
+  } else {
+    req.flash('notice', 'Sorry, the password update failed.')
+    res.status(501).redirect(`${account_id}`)
   }
 }
 
@@ -301,3 +288,4 @@ module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buil
 
 
 // line 127 : uses the bcrypt.compare() function which takes the incoming, plain text password and the hashed password from the database and compares them to see if they match.
+

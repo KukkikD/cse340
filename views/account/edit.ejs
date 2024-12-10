@@ -38,7 +38,7 @@
 <div class="register">
   <form action="/account/edit/password" method="post" id="updatePasswordForm">
     <label for="account_password">New Password:</label>
-    <input type="password" id="account_password" name="account_password" pattern="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$" required>
+    <input type="password" id="account_password" name="account_password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required>
     <span><P>Passwords must be at least 12 characters long, contain 1 uppercase letter, 1 number, and 1 special character.</P></span>
 
     <input type="hidden" name="account_id" value="<%= account_id %>">
