@@ -190,104 +190,112 @@ const restrictedAreaView = async (req, res) => {
 }
 
 /* ****************************************
-*  Deliver edit account view
-* *************************************** */
+ *  Deliver edit account view
+ * *************************************** */
 async function buildEditAccount(req, res, next) {
-  const accountId = parseInt(req.params.account_id)
-  const localId = parseInt(res.locals.accountData.account_id)
+  const accountId = parseInt(req.params.account_id);
+  const localId = parseInt(res.locals.accountData.account_id);
+
   if (accountId === localId) {
-    const info = await accountModel.getAccountById(accountId)
-    let nav = await utilities.getNav()
-    res.render("account/edit", {
-      title: "Edit Account",
-      nav,
-      errors: null,
-      account_id: accountId,
-      account_firstname: info.account_firstname,
-      account_lastname: info.account_lastname,
-      account_email: info.account_email,
-    })
+    try {
+      const info = await accountModel.getAccountById(accountId);
+      let nav = await utilities.getNav();
+
+      res.render("account/edit", {
+        title: "Edit Account",
+        nav,
+        errors: null,
+        account_id: accountId,
+        account_firstname: info.account_firstname,
+        account_lastname: info.account_lastname,
+        account_email: info.account_email,
+      });
+    } catch (error) {
+      console.error("Error fetching account info:", error);
+      req.flash("notice", "An error occurred while fetching account data.");
+      res.redirect("/account");
+    }
   } else {
-    req.flash("notice", "Invalid access.")
-    res.redirect("/account")
+    req.flash("notice", "Invalid access.");
+    res.redirect("/account");
   }
-  
 }
 
 /* ****************************************
-* week05
-*  generate edit account info response
-* *************************************** */
+ * Generate edit account info response
+ * *************************************** */
 async function updateInfoData(req, res, next) {
-  const { 
+  const {
     account_id,
     account_firstname,
     account_lastname,
-    account_email
+    account_email,
   } = req.body;
 
+  if (!account_firstname || !account_lastname || !account_email) {
+    req.flash("notice", "All fields are required.");
+    return res.redirect(`/account/edit/${account_id}`);
+  }
+
   try {
-    const updateResult = await accountModel.updateInfoData(
+    await accountModel.updateInfoData(
       account_id,
       account_firstname,
       account_lastname,
       account_email
     );
 
-    if (updateResult) {
-      const accessToken = jwt.sign(req.body, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
-      if (process.env.NODE_ENV === 'development') {
-        res.cookie('jwt', accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
-      } else {
-        res.cookie('jwt', accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 });
-      }
-      req.flash('notice', 'The account was successfully updated.');
-    } else {
-      req.flash('notice', 'The account update process completed (no changes made).');
-    }
-
-    res.redirect('/account/');
+    req.flash("notice", "Congratulations, your information has been updated.");
+    res.redirect("/account");
   } catch (error) {
-    console.error('Error updating account info:', error);
-    req.flash('notice', 'An unexpected error occurred.');
-    res.status(500).redirect('/account/');
+    console.error("Error updating account info:", error);
+    req.flash("notice", "An unexpected error occurred while updating your information.");
+    res.status(500).redirect(`/account/edit/${account_id}`);
   }
 }
 
 /* ****************************************
-* week05 
-*  generate edit account password response
-* *************************************** */
+ * Generate edit account password response
+ * *************************************** */
 async function updatePassword(req, res, next) {
-  const { 
+  const {
     account_id,
-    account_password
-  } = req.body;
+    account_password,
+  } = req.body
+
+  if (!account_password) {
+    req.flash("notice", "Password field cannot be empty.")
+    return res.redirect(`/account/edit/${account_id}`)
+  }
 
   try {
-    let hashedPassword = await bcrypt.hashSync(account_password, 10);
+    // Fetch current account info
+    const currentInfo = await accountModel.getAccountById(account_id)
+    const isSamePassword = await bcrypt.compare(account_password, currentInfo.account_password)
 
-    const updateResult = await accountModel.updatePassword(
-      account_id,
-      hashedPassword
-    );
-
-    // หากรหัสผ่านอัปเดตสำเร็จ
-    if (updateResult) {
-      req.flash('notice', 'Password updated successfully.');
-    } else {
-      // หากไม่มีการอัปเดตเนื่องจากรหัสผ่านใหม่เหมือนรหัสผ่านเดิม
-      req.flash('notice', 'No changes were made to the password. The new password must be different from the current one.');
+    if (isSamePassword) {
+      req.flash("notice", "The new password must be different from the current one.")
+      return res.redirect(`/account/edit/${account_id}`)
     }
 
-    res.redirect('/account/');
+    // Hash the new password
+    let hashedPassword = await bcrypt.hash(account_password, 10)
+
+    const updateResult = await accountModel.updatePassword(account_id, hashedPassword)
+
+    if (updateResult) {
+      req.flash("notice", "Password updated successfully.")
+    } else {
+      req.flash("notice", "No changes were made to the password.")
+    }
+
+    res.redirect("/account")
   } catch (error) {
-    console.error('Error updating password:', error);
-    req.flash('notice', 'Sorry, there was an error processing the password update.');
-    res.status(500).redirect('/account/');
+    console.error("Error updating password:", error)
+    req.flash("notice", "Sorry, there was an error processing the password update.")
+    res.status(500).redirect(`/account/edit/${account_id}`)
   }
 }
-
 
 module.exports = {buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagementView, logoutAccount, restrictedAreaView, buildEditAccount,  updateInfoData, updatePassword };
 

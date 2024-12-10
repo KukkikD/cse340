@@ -59,16 +59,24 @@ router.get("/edit/:account_id", utilities.checkLogin, utilities.handleErrors(acc
 *  Process the info update 
 * week 05 : Account Management task5
 * *************************************** */
-router.post("/edit/info", regValidate.UpdateInfoRules(), regValidate.checkUpdateInfoData, 
-    utilities.handleErrors (accountController.updateInfoData))
+router.post(
+  "/edit/info",
+  regValidate.UpdateInfoRules(),
+  regValidate.checkUpdateInfoData,
+  utilities.handleErrors(accountController.updateInfoData)
+)
   
   
 /* ****************************************
 *  Process the password update
 * week 05 : Account Management task5
 * *************************************** */
-  router.post("/edit/password", regValidate.UpdatePasswordRules(), regValidate.checkUpdatePasswordData,
-    utilities.handleErrors(accountController.updatePassword))
+  router.post(
+  "/edit/password",
+  regValidate.UpdatePasswordRules(),
+  regValidate.checkUpdatePasswordData,
+  utilities.handleErrors(accountController.updatePassword)
+)
 
 
 module.exports = router;
