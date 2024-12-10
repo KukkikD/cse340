@@ -44,7 +44,7 @@ router.get("/logout", utilities.checkLogin, utilities.handleErrors(accountContro
 * *************************************** */
 router.get(
     "/restricted", utilities.checkLogin,
-    utilities.checkAccountType, // Middleware check account type
+    //utilities.checkAccountType, // Middleware check account type
     utilities.handleErrors(accountController.restrictedAreaView)
   );
 

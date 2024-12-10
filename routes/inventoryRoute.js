@@ -22,7 +22,7 @@ router.post("/add-classification", regValidate.addClassificationRules(),
 regValidate.checkClassificationData, utilities.handleErrors(invController.addNewClassification))
 
 // Route to build add inventory
-router.get("/add-inventory", utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.addInventory))
+router.get("/add-inventory", utilities.checkLogin, utilities.handleErrors(invController.addInventory))
 
 // Process the add inventory form
 router.post("/add-inventory", regValidate.addInventoryRules(),
