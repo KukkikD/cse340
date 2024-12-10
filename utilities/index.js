@@ -214,14 +214,14 @@ Util.checkLogin = (req, res, next) => {
  *  week 05 Account Management 
  *  Check Account Type
  * ************************************ */
-Util.checkAccountType = (req, res, next) => {
+/* Util.checkAccountType = (req, res, next) => {
   if (res.locals.accountData.account_type == "Employee" || res.locals.accountData.account_type == "Admin" ) {
     next()
   } else {
     req.flash("notice", "You do not have permission to access this area.")
     return res.redirect("/account/login")
   }
-}
+}*/
 
 
 module.exports = Util

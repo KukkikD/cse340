@@ -24,7 +24,7 @@ router.post("/login", regValidate.loginRules(),
 regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin)) //modifiy from accountController.loginAccount
 
 // week 05: Build account management view route
-router.get("/account-management", utilities.handleErrors(accountController.buildAccountManagementView))
+router.get("/account-management", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView))
 
 /* ****************************************
 *  Deliver Account Management view

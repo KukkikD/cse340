@@ -18,14 +18,10 @@
     <div class = "account-mgn">
       <h2> Welcome <%= locals.accountData.account_firstname %> </h2>
       <p>You're logged in.</p> 
-      <a id "edit-acc" href="/account/edit/<%= locals.accountData.account_id %>"> Edit Account Information </a>
+      <a href="/account/edit/<%= locals.accountData.account_id %>"> Edit Account Information </a>
 
-      <% if(locals.accountData.account_type === 'admin' || locals.accountData.account_type === 'employee') { %>
+      <h3>Inventory Management</h3>
 
-        <h3>Inventory Management</h3>
-
-        <p></p><a href="/"></a>Manage Inventory </a></p>
-
-      <% } %>
+      <a href="/inv/">Manage Inventory</a>
 
     </div>

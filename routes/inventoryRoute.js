@@ -12,10 +12,10 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:vehicleId", utilities.handleErrors(invController.buildByVehicleId))
 
 // Route to render management view
-router.get("/", utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.renderManagementView))
+router.get("/", utilities.checkLogin, utilities.handleErrors(invController.renderManagementView))
 
 // Route to build classification view
-router.get("/add-classification", utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.addClassification))
+router.get("/add-classification", utilities.checkLogin, utilities.handleErrors(invController.addClassification))
 
 // Route to process add Classivication
 router.post("/add-classification", regValidate.addClassificationRules(),
@@ -32,13 +32,13 @@ regValidate.checkInventoryData, utilities.handleErrors(invController.addNewInven
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
 //week 05: build edit inventory view route.
-router.get("/edit/:inv_id", utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.editInventoryView))
+router.get("/edit/:inv_id", utilities.checkLogin,  utilities.handleErrors(invController.editInventoryView))
 
 //week 05: process update inventory 
 router.post("/update", regValidate.addInventoryRules(), regValidate.checkInventoryUpdateData, utilities.handleErrors(invController.updateInventory)) 
 
 //week05 :// add deleting view
-router.get("/delete/:inv_id", utilities.checkLogin, utilities.checkAccountType, utilities.handleErrors(invController.deleteView))
+router.get("/delete/:inv_id", utilities.checkLogin, utilities.handleErrors(invController.deleteView))
 
 //week05 :// deleting process
 router.post("/delete", utilities.handleErrors(invController.deleteItem))
