@@ -255,3 +255,22 @@ WHERE classification.classification_name = 'Sport';
 UPDATE inventory 
 SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
+
+
+--week02: update account by account type.
+INSERT INTO public.account (account_firstname, account_lastname, account_email, account_password, account_type)
+VALUES
+('Basic', 'Client', 'basic@340.edu', 'I@mABas1cCl!3nt', 'Client'),
+('Happy', 'Employee', 'happy@340.edu', 'I@mAnEmpl0y33', 'Employee'),
+('Manager', 'User', 'manager@340.edu', 'I@mAnAdm!n1strat0r', 'Admin');
+
+
+--ถ้าทำตามข้างบนแล้วไม่ต้องทำตามอันนี้ แต่นำข้อมูลเข้าระบบโดยหน้า  login ต้องทำแบบข้างล่างด้วย
+-- week5 set up account ID for account_type
+UPDATE public.account
+SET account_type = 'Employee'
+WHERE account_id = 2; -- เปลี่ยนเป็น 'Employee' สำหรับบัญชีที่มี ID = 2
+
+UPDATE public.account
+SET account_type = 'Admin'
+WHERE account_id = 3; -- เปลี่ยนเป็น 'Admin' สำหรับบัญชีที่มี ID = 3

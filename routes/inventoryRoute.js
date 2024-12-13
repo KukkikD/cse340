@@ -12,7 +12,7 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 router.get("/detail/:vehicleId", utilities.handleErrors(invController.buildByVehicleId))
 
 // Route to render management view
-router.get("/", utilities.checkLogin, utilities.handleErrors(invController.renderManagementView))
+router.get("/", utilities.checkLogin, utilities.authenticateToken, utilities.checkAdminOrEmployee, utilities.handleErrors(invController.renderManagementView))
 
 // Route to build classification view
 router.get("/add-classification", utilities.checkLogin, utilities.handleErrors(invController.addClassification))

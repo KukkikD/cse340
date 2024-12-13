@@ -30,7 +30,7 @@ router.get("/account-management", utilities.checkLogin, utilities.handleErrors(a
 *  Deliver Account Management view
 * week 05 : JWT Authorization acctivity 
 * *************************************** */
-router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagementView))
+router.get("/", utilities.checkLogin, utilities.checkAdminOrEmployee, utilities.handleErrors(accountController.buildAccountManagementView))
 
 /* ****************************************
 *  Route to  logout 

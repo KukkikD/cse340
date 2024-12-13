@@ -212,16 +212,40 @@ Util.checkLogin = (req, res, next) => {
 
  /* ****************************************
  *  week 05 Account Management 
- *  Check Account Type
+ *  Middleware For 
+ *  Check Account Type (admin, employee or client)
  * ************************************ */
-/* Util.checkAccountType = (req, res, next) => {
-  if (res.locals.accountData.account_type == "Employee" || res.locals.accountData.account_type == "Admin" ) {
-    next()
+Util.checkAdminOrEmployee = (req, res, next) => {
+  if (req.accountData && (req.accountData.account_type === 'Admin' || req.accountData.account_type === 'Employee')) {
+    next() // if pass will be Admin or Employee
   } else {
-    req.flash("notice", "You do not have permission to access this area.")
-    return res.redirect("/account/login")
+    req.flash('error', 'You do not have permission to access this page.')
+    res.redirect('/account/login')
   }
-}*/
+}
+
+/* ****************************************
+ *  week 05 Account Management 
+ *  Middleware For 
+ *  authenticateToken
+ * ************************************ */
+Util.authenticateToken = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    req.flash('error', 'You need to login first.');
+    return res.redirect('/account/login');
+  }
+
+  try {
+    req.accountData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    next();
+  } catch (error) {
+    req.flash('error', 'Invalid token. Please login again.');
+    res.redirect('/account/login');
+  }
+}
+
+
 
 
 module.exports = Util
