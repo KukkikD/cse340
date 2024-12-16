@@ -1,5 +1,5 @@
 const utilities = require("../utilities/")
-const accountModel = require("../models/account-model");
+const accountModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -130,6 +130,14 @@ async function accountLogin(req, res) {
       // Set req.accountData for middleware to use.
       req.accountData = accountData
 
+      // Set req.session.user
+      req.session.user = {
+        account_id: accountData.account_id,
+        account_email: accountData.account_email,
+      }
+
+      console.log("Session user:", req.session.user) // ตรวจสอบว่าค่าถูกต้องหรือไม่
+
       const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
 
       if(process.env.NODE_ENV === 'development') {
@@ -140,7 +148,7 @@ async function accountLogin(req, res) {
       return res.redirect("/account/account-management")
     }
     else {
-      req.flash("message notice", "Please check your credentials and try again.")
+      req.flash("notice", "Please check your credentials and try again.")
       res.status(400).render("account/login", {
         title: "Login",
         nav,

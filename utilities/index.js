@@ -202,6 +202,7 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
+  console.log("Session User in checkLogin:", req.session.user);
   if (res.locals.loggedin) {
     next()
   } else {

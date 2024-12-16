@@ -16,6 +16,7 @@ const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require("./database/")
 const accountRoute = require("./routes/accountRoute")
+const contactRoute = require("./routes/contactRoute")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 
@@ -32,6 +33,12 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+// Load middleware checkLogin before Route
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
 
 // Express Messages Middleware
 app.use(require("connect-flash")())
@@ -72,6 +79,8 @@ app.use("/inv", inventoryRoute)
 // Account routes from Week04: Activity
 app.use("/account", accountRoute)
 
+// Contact routes from Week06: Activity
+app.use("/contact", contactRoute);
 
 // Add a route that will cause an error
 app.get("/trigger-error", utilities.handleErrors(baseController.triggerError));

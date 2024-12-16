@@ -274,3 +274,17 @@ WHERE account_id = 2; -- เปลี่ยนเป็น 'Employee' สำห�
 UPDATE public.account
 SET account_type = 'Admin'
 WHERE account_id = 3; -- เปลี่ยนเป็น 'Admin' สำหรับบัญชีที่มี ID = 3
+
+
+--Week06 Activity Final Enhancement:
+-- create contact table--
+CREATE TABLE contact (
+  contact_id SERIAL PRIMARY KEY,
+  account_id INTEGER NOT NULL,
+  account_email VARCHAR(255) NOT NULL,
+  subject VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (account_id) REFERENCES account(account_id)
+);
+
